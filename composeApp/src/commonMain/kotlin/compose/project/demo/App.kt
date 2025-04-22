@@ -25,9 +25,9 @@ import kotlin.random.Random
 
 @Composable
 @Preview
-fun App() {
+fun App(modifier: Modifier = Modifier) {
     MaterialTheme {
-        GridLayout()
+        GridLayout(modifier)
     }
 }
 
@@ -36,19 +36,26 @@ fun App() {
 fun GridLayout(
     modifier: Modifier = Modifier
 ) {
-    val numbers = (0..20).toList()
+
+    val colors = arrayOfNulls<Color>(30)
+    colors.forEachIndexed { index, _ ->
+        val color = Color(
+            Random.nextInt(255),
+            Random.nextInt(255),
+            Random.nextInt(255),
+            Random.nextInt(255),
+        )
+        colors[index] = color
+
+    }
 
 
     LazyVerticalGrid(
+        modifier = modifier,
         columns = GridCells.Fixed(4)
     ) {
-        items(numbers.size) {
-            val color = Color(
-                Random.nextInt(255),
-                Random.nextInt(255),
-                Random.nextInt(255),
-                Random.nextInt(255),
-            )
+        items(colors.size) { index ->
+            val color = colors[index] ?: Color.White
             Box(modifier = Modifier
                 .background(color)
                 .squareSize()) {
