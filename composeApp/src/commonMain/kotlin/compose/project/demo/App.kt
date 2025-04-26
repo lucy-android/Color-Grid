@@ -11,6 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.LayoutModifier
 import androidx.compose.ui.layout.Measurable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.platform.InspectorInfo
@@ -27,7 +33,26 @@ import kotlin.random.Random
 @Preview
 fun App(modifier: Modifier = Modifier) {
     MaterialTheme {
-        GridLayout(modifier)
+        Column(modifier = Modifier.fillMaxSize()) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = {}, modifier = Modifier, content = {
+                    Text(text = "Add color")
+                })
+                Button(onClick = {}, modifier = Modifier, content = {
+                    Text(text = "Remove first color")
+                })
+            }
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = {}, modifier = modifier, content = {
+                    Text(text = "Remove last color")
+                })
+                Button(onClick = {}, modifier = modifier, content = {
+                    Text(text = "Clear colors")
+                })
+            }
+
+            GridLayout(modifier)
+        }
     }
 }
 
@@ -37,7 +62,7 @@ fun GridLayout(
     modifier: Modifier = Modifier
 ) {
 
-    val colors = arrayOfNulls<Color>(30)
+    val colors = arrayOfNulls<Color>(1)
     colors.forEachIndexed { index, _ ->
         val color = Color(
             Random.nextInt(255),
@@ -56,9 +81,11 @@ fun GridLayout(
     ) {
         items(colors.size) { index ->
             val color = colors[index] ?: Color.White
-            Box(modifier = Modifier
-                .background(color)
-                .squareSize()) {
+            Box(
+                modifier = Modifier
+                    .background(color)
+                    .squareSize()
+            ) {
             }
         }
     }
